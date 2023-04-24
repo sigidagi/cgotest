@@ -4,13 +4,19 @@ const face = @cImport(
     @cInclude("interface.h"),
 );
 
-const SeqPing = struct {
-    const Self = @This();
+const Foo = struct {
+    pub fn callback(self: Foo, setup: *face.QSetup_t) void {
+        _ = self;
+        std.debug.print("MyTest callback, Setup: {}\n", .{
+            setup,
+        });
+    }
 };
 
-pub fn callback(setup: *face.QSetup_t, context: ?*anyopaque) void {
-    _ = context;
-    std.debug.print("Callback, setup version! {d}\n", .{setup.Version});
+// Gateway function
+pub fn callback(setup: *face.QSetup_t, context: *anyopaque) void {
+    var foo_ptr: *Foo = @ptrCast(*Foo, context);
+    foo_ptr.callback(setup);
 }
 
 pub fn main() void {
@@ -22,7 +28,9 @@ pub fn main() void {
     }
 
     std.debug.print("Hello from Zig!\n", .{});
-    face.RegisterCallback(@ptrCast(face.callback, &callback), null);
+
+    var foo = Foo{};
+    face.RegisterCallback(@ptrCast(face.callback, &callback), &foo);
 
     var setup = face.QSetup_t{
         .VendorID = 0,
