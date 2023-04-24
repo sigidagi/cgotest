@@ -4,6 +4,15 @@ const face = @cImport(
     @cInclude("interface.h"),
 );
 
+const SeqPing = struct {
+    const Self = @This();
+};
+
+pub fn callback(setup: *face.QSetup_t, context: ?*anyopaque) callconv(.C) void {
+    _ = context;
+    std.debug.print("Callback, setup version! {d}\n", .{setup.Version});
+}
+
 pub fn main() void {
     //
     const argv = std.os.argv;
@@ -13,6 +22,7 @@ pub fn main() void {
     }
 
     std.debug.print("Hello from Zig!\n", .{});
+    face.RegisterCallback(@ptrCast(face.callback, &callback), null);
 
     var setup = face.QSetup_t{
         .VendorID = 0,
