@@ -1,0 +1,9 @@
+[submodule "third_party/nlassert"]
+	path = third_party/nlassert
+	url = https://github.com/nestlabs/nlassert.git
+[submodule "third_party/nlio"]
+	path = third_party/nlio
+	url = https://github.com/nestlabs/nlio.git
+[submodule "third_party/fmt"]
+	path = third_party/fmt
+	url = https://github.com/fmtlib/fmt.git

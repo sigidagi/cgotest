@@ -19,14 +19,30 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
+add_definitions(-DFMT_HEADER_ONLY)
+
 include_directories(
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/include
+        ${CMAKE_SOURCE_DIR}
+        ${CMAKE_SOURCE_DIR}/include
+        ${CMAKE_SOURCE_DIR}/third_party/nlio/include
+        ${CMAKE_SOURCE_DIR}/third_party/nlassert/include
+        ${CMAKE_SOURCE_DIR}/third_party/fmt/include
+        )
+
+set(SOURCE 
+        ${CMAKE_SOURCE_DIR}/src/CHIPMem-Malloc.cpp
+        ${CMAKE_SOURCE_DIR}/src/Base38Decode.cpp
+        ${CMAKE_SOURCE_DIR}/src/BytesToHex.cpp
+        ${CMAKE_SOURCE_DIR}/src/SetupPayload.cpp
+        ${CMAKE_SOURCE_DIR}/src/QRCodeSetupPayloadParser.cpp
+        ${CMAKE_SOURCE_DIR}/src/TLVReader.cpp
     )
 
 add_library(${PROJECT_NAME}
-    ${CMAKE_SOURCE_DIR}/src/interface.cpp
-    )
+        ${SOURCE}
+        ${CMAKE_SOURCE_DIR}/src/interface.cpp
+        )
+
 
 add_executable(parser_test
     ${CMAKE_SOURCE_DIR}/src/main.cpp

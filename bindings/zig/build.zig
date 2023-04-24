@@ -10,8 +10,24 @@ pub fn build(b: *std.Build) void {
     b.default_step.dependOn(&exe.step);
 
     exe.addIncludePath("../../include");
-    exe.addCSourceFile("../../src/interface.cpp", &[_][]const u8{});
-    //exe.addObjectFile("../../build/libqrparser.a");
+    exe.addIncludePath("../../third_party/fmt/include");
+    exe.addIncludePath("../../third_party/nlio/include");
+    exe.addIncludePath("../../third_party/nlassert/include");
+
+    exe.addCSourceFiles(&.{
+        "../../src/interface.cpp",
+        "../../src/Base38Decode.cpp",
+        "../../src/BytesToHex.cpp",
+        "../../src/CHIPMem-Malloc.cpp",
+        "../../src/QRCodeSetupPayloadParser.cpp",
+        "../../src/SetupPayload.cpp",
+        "../../src/TLVReader.cpp",
+    }, &.{
+        "-std=c++17",
+        "-Wall",
+        "-W",
+        "-DFMT_HEADER_ONLY",
+    });
 
     exe.linkLibC();
     exe.linkLibCpp();

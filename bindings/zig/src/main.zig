@@ -29,9 +29,15 @@ pub fn main() void {
 
     std.debug.print("Hello from Zig!\n", .{});
 
+    // method 1.
     var foo = Foo{};
     face.RegisterCallback(@ptrCast(face.callback, &callback), &foo);
+    const ret = face.Run(argv[1]);
+    if (ret != 0) {
+        std.debug.print("Parsing failed with error: {d}", .{ret});
+    }
 
+    // method 2.
     var setup = face.QSetup_t{
         .VendorID = 0,
         .ProductID = 0,
@@ -42,10 +48,8 @@ pub fn main() void {
     };
 
     // Pass argument as input string (QR string)
-    const ret = face.QRParse(argv[1], &setup);
-    if (ret == 0) {
-        face.PrintSetup(&setup);
-    } else {
-        std.debug.print("Parsing failed", .{});
+    const ret2 = face.QRParse(argv[1], &setup);
+    if (ret2 == 0) {} else {
+        std.debug.print("Parsing failed with error: {d}", .{ret2});
     }
 }

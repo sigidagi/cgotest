@@ -1,6 +1,7 @@
 #pragma once
 
 typedef enum EnumRendezvous {
+    NONE = 0,
     SOFTAP = 1,
     BLE = 2,
     ONNETWORK = 3,
@@ -16,7 +17,6 @@ typedef struct QSetup
     unsigned long Passcode;
 } QSetup_t;
 
-
 typedef void (*callback)(QSetup_t *setup, void* context);
 
 typedef struct Event {
@@ -24,14 +24,15 @@ typedef struct Event {
     void *context;
 } Event_t;
 
+
 #ifdef __cplusplus
     extern "C" {
 #endif
 
     int QRParse(const char* in, QSetup_t* out);
-    void PrintSetup(const QSetup_t* payload);
-
+    // async
     void RegisterCallback(callback cb, void *context);
+    int Run(const char* in);
 
 #ifdef __cplusplus
     }
