@@ -8,7 +8,7 @@ const SeqPing = struct {
     const Self = @This();
 };
 
-pub fn callback(setup: *face.QSetup_t, context: ?*anyopaque) callconv(.C) void {
+pub fn callback(setup: *face.QSetup_t, context: ?*anyopaque) void {
     _ = context;
     std.debug.print("Callback, setup version! {d}\n", .{setup.Version});
 }
