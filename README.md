@@ -34,6 +34,15 @@ cd binding/rust
 cargo run justadummystring
 ```
 
+#### Alternative example of rust <-> c++ bindings using cxx create
+
+You can use the rust cxx crate to create direct bindings between c++ and rust without intermediate C wrappers
+
+```
+cd bindings/rust_cxx
+cargo run
+```
+
 ### Build and Run Zig client
 
 Install [Zig](https://ziglang.org/) compiler first

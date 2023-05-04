@@ -1,3 +1,5 @@
-/crusttest/target
+/bindings/rust/target
+/bindings/rust_cxx/target
+build
 Cargo.lock
 .cache
